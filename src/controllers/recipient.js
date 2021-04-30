@@ -16,6 +16,22 @@ recipientsRouter.get('/', async (request, response) => {
     })
   response.json(recipients)
 })
+// GET ONE
+recipientsRouter.get('/:id', async (request, response) => {
+  const { id } = request.params
+
+  const recipient = await Recipient.findById(id)
+    .populate({
+      path: 'typeAccount',
+      select: { name: 1 }
+    })
+  if (!recipient) {
+    return response.status(404).json({
+      error: 'recipient not found'
+    })
+  }
+  response.json(recipient)
+})
 // POST: CREATE A NEW RECIPIENT
 recipientsRouter.post('/', async (request, response, next) => {
   const { userId, body } = request

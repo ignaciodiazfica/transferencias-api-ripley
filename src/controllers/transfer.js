@@ -41,6 +41,11 @@ transfersRouter.get('/:id', async (request, response) => {
         select: { name: 1 }
       }
     })
+  if (!transfer) {
+    return response.status(404).json({
+      error: 'transfer not found'
+    })
+  }
   response.json(transfer)
 })
 
