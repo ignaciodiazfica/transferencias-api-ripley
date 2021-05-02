@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/User')
-const userExtractor = require('./src/middleware/userExtractor')
+const userExtractor = require('../middleware/userExtractor')
 
 usersRouter.get('/all', userExtractor, async (request, response) => {
   const users = await User.find({})
