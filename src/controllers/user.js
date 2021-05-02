@@ -1,12 +1,13 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/User')
+const userExtractor = require('./src/middleware/userExtractor')
 
-usersRouter.get('/all', async (request, response) => {
+usersRouter.get('/all', userExtractor, async (request, response) => {
   const users = await User.find({})
   response.json(users)
 })
-usersRouter.get('/', async (request, response) => {
+usersRouter.get('/', userExtractor, async (request, response) => {
   const { userId } = request
 
   const user = await User.findById(userId)
@@ -28,7 +29,7 @@ usersRouter.post('/', async (request, response) => {
   response.status(201).json(savedUser)
 })
 
-usersRouter.put('/:id', async (request, response) => {
+usersRouter.put('/:id', userExtractor, async (request, response) => {
   const { body, params } = request
   const { id } = params
   const { username, name, password } = body
@@ -43,7 +44,7 @@ usersRouter.put('/:id', async (request, response) => {
   response.status(200).json(updatedUser)
 })
 
-usersRouter.delete('/:id', async (request, response, next) => {
+usersRouter.delete('/:id', userExtractor, async (request, response, next) => {
   const { id } = request.params
   const res = await User.findByIdAndDelete(id)
   if (res === null) { return next() }

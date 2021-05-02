@@ -25,7 +25,7 @@ app.get('/', (request, response) => {
 
 // Rutas
 app.use('/api/auth', loginRouter)
-app.use('/api/users', userExtractor, usersRouter)
+app.use('/api/users', usersRouter)
 app.use('/api/banks', userExtractor, banksRouter)
 app.use('/api/type-accounts', userExtractor, typeAccountsRouter)
 app.use('/api/recipients', userExtractor, recipientsRouter)
