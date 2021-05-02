@@ -21,7 +21,7 @@ transfersRouter.get('/', async (request, response) => {
         select: { name: 1 }
       }
     })
-  response.json(transfers)
+  response.json(transfers.sort((x, y) => new Date(y.created).getTime() - new Date(x.created).getTime()))
 })
 // GET ONE
 transfersRouter.get('/:id', async (request, response) => {
